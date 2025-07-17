@@ -1,1 +1,2 @@
-# ZelChat-proximity
+ZelChat Proximity is a premium addon for ZelChat that introduces location-based communication to your Minecraft server. 
+Players can seamlessly switch between Local Chat (proximity-based) and Global Chat (server-wide) using an intuitive GUI interface.

@@ -1,0 +1,18 @@
+sounds:
+  gui-open:
+    sound: "ITEM_SPYGLASS_USE"
+    volume: 1.0
+    pitch: 1.0
+    enabled: true
+
+  mode-switch:
+    sound: "ENTITY_ITEM_PICKUP"
+    volume: 0.8
+    pitch: 1.2
+    enabled: true
+
+  gui-close:
+    sound: "ENTITY_VILLAGER_NO"
+    volume: 0.6
+    pitch: 1.0
+    enabled: true

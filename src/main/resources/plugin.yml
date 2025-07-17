@@ -1,0 +1,30 @@
+name: ZelChat-proximity
+version: '1.0.0'
+main: com.shyamstudio.rai.zelChatProximity.ZelChatProximity
+api-version: '1.21'
+authors: [ Ravi_Rai ]
+description: A Zelchat Addon From ShyamStudio Developed By RaviRai
+depend: [ ZelChat ]
+folia-supported: true
+
+commands:
+  chat:
+    description: Open chat mode selection GUI
+    usage: /chat
+    permission: zelchatproximity.use
+
+  pzelchat:
+    description: Reload the proximity chat plugin
+    usage: /pzelchat reload
+    permission: zelchatproximity.admin
+
+permissions:
+  zelchatproximity.use:
+    description: Allows player to toggle between chat modes
+    default: true
+  zelchatproximity.local:
+    description: Allows player to use local chat mode
+    default: true
+  zelchatproximity.admin:
+    description: Allows player to reload the plugin
+    default: op
