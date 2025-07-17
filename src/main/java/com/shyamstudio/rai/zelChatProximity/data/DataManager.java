@@ -5,6 +5,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.shyamstudio.rai.zelChatProximity.ZelChatProximity;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.Blocking;
 
 import java.io.File;
 import java.io.FileReader;
@@ -17,6 +18,7 @@ import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
+import java.util.logging.Level;
 
 public class DataManager {
 
@@ -36,8 +38,8 @@ public class DataManager {
     this.playerDataMap = new ConcurrentHashMap<>();
   }
 
-  public CompletableFuture<Void> loadDataAsync() {
-    return CompletableFuture.runAsync(() -> {
+  @Blocking
+  public void loadData() {
       if (!plugin.getDataFolder().exists()) {
         plugin.getDataFolder().mkdirs();
       }
@@ -60,22 +62,20 @@ public class DataManager {
       } finally {
         lock.writeLock().unlock();
       }
-    });
   }
 
-  public CompletableFuture<Void> saveDataAsync() {
+  @Blocking
+  public void saveData() {
     if (pendingSave) {
-      return CompletableFuture.completedFuture(null);
+      return;
     }
 
     pendingSave = true;
-    return CompletableFuture.runAsync(() -> {
       try {
         saveDataSync();
       } finally {
         pendingSave = false;
       }
-    });
   }
 
   private void saveDataSync() {
@@ -97,7 +97,7 @@ public class DataManager {
     }
   }
 
-  public PlayerData getPlayerData(UUID playerId) {
+  public PlayerData getOrLoadPlayerData(UUID playerId) {
     return playerDataMap.computeIfAbsent(playerId, id -> new PlayerData(id, false));
   }
 
@@ -107,7 +107,7 @@ public class DataManager {
 
   public CompletableFuture<Void> togglePlayerModeAsync(Player player) {
     return CompletableFuture.runAsync(() -> {
-      PlayerData data = getPlayerData(player.getUniqueId());
+      PlayerData data = getOrLoadPlayerData(player.getUniqueId());
       data.toggleMode();
       setPlayerData(player.getUniqueId(), data);
 
@@ -119,7 +119,7 @@ public class DataManager {
         player.sendMessage(message.replace("&", "§"));
 
         if (plugin.getConfigManager().isDebugEnabled()) {
-          plugin.getLogger().info("[DEBUG] Player " + player.getName() + " toggled to " +
+          plugin.getLogger().log(Level.FINEST,"[DEBUG] Player " + player.getName() + " toggled to " +
               (data.isLocalMode() ? "LOCAL" : "GLOBAL") + " mode");
         }
       });

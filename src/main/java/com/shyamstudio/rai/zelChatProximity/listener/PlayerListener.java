@@ -20,7 +20,7 @@ public class PlayerListener implements Listener {
   @EventHandler(priority = EventPriority.MONITOR)
   public void onPlayerJoin(PlayerJoinEvent event) {
     CompletableFuture.runAsync(() -> {
-      dataManager.getPlayerData(event.getPlayer().getUniqueId());
+      dataManager.getOrLoadPlayerData(event.getPlayer().getUniqueId());
     });
   }
 

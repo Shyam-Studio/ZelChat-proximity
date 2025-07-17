@@ -1,5 +1,5 @@
 name: ZelChat-proximity
-version: '1.0.0'
+version: '1.0.1'
 main: com.shyamstudio.rai.zelChatProximity.ZelChatProximity
 api-version: '1.21'
 authors: [ Ravi_Rai ]

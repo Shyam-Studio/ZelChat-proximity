@@ -5,6 +5,7 @@ import org.bukkit.Sound;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.Blocking;
 
 import java.io.File;
 import java.io.IOException;
@@ -41,8 +42,8 @@ public class SoundManager {
     this.soundCache = new ConcurrentHashMap<>();
   }
 
-  public CompletableFuture<Void> loadSoundConfigAsync() {
-    return CompletableFuture.runAsync(() -> {
+  @Blocking
+  public void loadSoundConfig() {
       soundFile = new File(plugin.getDataFolder(), "sounds.yml");
 
       if (!soundFile.exists()) {
@@ -64,7 +65,6 @@ public class SoundManager {
       saveSoundConfig(config);
       soundConfig.set(config);
       updateSoundCache(config);
-    });
   }
 
   private void setDefaults(FileConfiguration config) {

@@ -72,7 +72,7 @@ messages:
   global-mode: "&8[&6Chat&8] &7Switched to &9&lGlobal &7chat mode &8(&9Unlimited range&8)"
   no-permission: "&8[&6Chat&8] &cInsufficient permissions for local chat. &7Switched to global mode."
   reload-success: "&8[&6ZelChat-Proximity&8] &aConfiguration reloaded successfully!"
-  reload-usage: "&8[&6ZelChat-Proximity&8] &cUsage: &f/pzelchat reload"
+  reload-usage: "&8[&6ZelChat-Proximity&8] &cUsage: &f/pzelchat reload|debug"
   no-permission-command: "&8[&6Chat&8] &cInsufficient permissions to use this command."
   no-permission-reload: "&8[&6ZelChat-Proximity&8] &cInsufficient permissions to reload the plugin."
   player-only: "&8[&6Chat&8] &cThis command can only be used by players."

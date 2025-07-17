@@ -34,9 +34,7 @@ public class ChatCommand implements CommandExecutor {
       return true;
     }
 
-    CompletableFuture.runAsync(() -> {
       guiManager.openChatGui(player);
-    });
 
     return true;
   }
