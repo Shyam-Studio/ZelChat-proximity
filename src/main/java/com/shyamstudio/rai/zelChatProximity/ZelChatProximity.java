@@ -11,6 +11,7 @@ import com.shyamstudio.rai.zelChatProximity.sound.SoundManager;
 import com.tcoded.folialib.FoliaLib;
 import it.pino.zelchat.api.ZelChatAPI;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
@@ -25,6 +26,8 @@ public final class ZelChatProximity extends JavaPlugin {
     private SoundManager soundManager;
     private GuiManager guiManager;
     private ProximityChatModule proximityModule;
+
+    private volatile boolean debugMode = false;
 
     @Override
     public void onEnable() {
@@ -110,5 +113,18 @@ public final class ZelChatProximity extends JavaPlugin {
 
     public ProximityChatModule getProximityModule() {
         return proximityModule;
+    }
+
+    public boolean getDebugMode() {
+        return debugMode;
+    }
+
+    public void setDebugMode(boolean value) {
+        this.debugMode = value;
+    }
+
+    public void logDebugMessage(@NotNull String message) {
+        if (!debugMode) return;
+        getLogger().info(message);
     }
 }

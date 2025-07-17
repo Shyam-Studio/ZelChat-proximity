@@ -71,16 +71,14 @@ public class PzelchatCommand implements CommandExecutor, TabCompleter {
     }
 
     private void changeDebugLevel(final CommandSender sender){
-        final var level = plugin.getLogger().getLevel();
+        final var enable = plugin.getDebugMode();
 
-        if(!level.equals(Level.INFO)){
+        if(enable){
+            plugin.setDebugMode(false);
             sender.sendMessage("§8[§6ZelChat-Proximity§8] §aDebugger has been disabled!");
-            plugin.getLogger().setLevel(Level.INFO);
-            Arrays.stream(plugin.getLogger().getHandlers()).forEach(handler -> handler.setLevel(Level.INFO));
             return;
         }
-        plugin.getLogger().setLevel(Level.ALL);
-        Arrays.stream(plugin.getLogger().getHandlers()).forEach(handler -> handler.setLevel(Level.ALL));
+        plugin.setDebugMode(true);
         sender.sendMessage("§8[§6ZelChat-Proximity§8] §aDebugger has been enabled! Check the console for more details.");
     }
 }

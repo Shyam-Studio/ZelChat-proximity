@@ -96,7 +96,7 @@ public class ProximityChatModule implements ChatModule {
     public void handleChatMessage(@NotNull ChatMessage chatMessage) {
         if (chatMessage.getState() != MessageState.PROCESSING && chatMessage.getState() != MessageState.READY) {
             if (configManager.isDebugEnabled()) {
-                plugin.getLogger().log(Level.FINE,"[DEBUG] Skipping message due to state: " + chatMessage.getState());
+                plugin.logDebugMessage("[DEBUG] Skipping message due to state: " + chatMessage.getState());
             }
             return;
         }
@@ -106,7 +106,7 @@ public class ProximityChatModule implements ChatModule {
 
         if (channelType == ChannelType.STAFF || channelType == ChannelType.PRIVATE) {
             if (configManager.isDebugEnabled()) {
-                plugin.getLogger().log(Level.FINE,"[DEBUG] Skipping proximity filtering for channel type: " + channelType);
+                plugin.logDebugMessage("[DEBUG] Skipping proximity filtering for channel type: " + channelType);
             }
             return;
         }
@@ -148,14 +148,14 @@ public class ProximityChatModule implements ChatModule {
 
             if (!anyLocalPlayers) {
                 if (configManager.isDebugEnabled()) {
-                    plugin.getLogger().log(Level.FINE,"[DEBUG] Sender is GLOBAL and no local players online - no filtering needed");
+                    plugin.logDebugMessage("[DEBUG] Sender is GLOBAL and no local players online - no filtering needed");
                 }
                 return;
             }
         }
 
         if (configManager.isDebugEnabled()) {
-            plugin.getLogger().log(Level.FINE,"[DEBUG] Applying proximity filtering - Sender: " + sender.getName() +
+            plugin.logDebugMessage("[DEBUG] Applying proximity filtering - Sender: " + sender.getName() +
                     " (mode: " + (senderIsLocal ? "LOCAL" : "GLOBAL") + ")");
         }
 
@@ -163,19 +163,19 @@ public class ProximityChatModule implements ChatModule {
         if (filteredViewers.isEmpty()) {
             filteredViewers.add(sender);
             if (configManager.isDebugEnabled()) {
-                plugin.getLogger().log(Level.FINE,"[DEBUG] No players in range, adding sender to viewers");
+                plugin.logDebugMessage("[DEBUG] No players in range, adding sender to viewers");
             }
         }
 
         if (configManager.isDebugEnabled()) {
-            plugin.getLogger().log(Level.FINE,"[DEBUG] Setting " + filteredViewers.size() + " filtered viewers for " + sender.getName());
+            plugin.logDebugMessage("[DEBUG] Setting " + filteredViewers.size() + " filtered viewers for " + sender.getName());
         }
 
         channel.setViewers(filteredViewers);
         channel.setType(ChannelType.CUSTOM);
 
         if (configManager.isDebugEnabled()) {
-            plugin.getLogger().log(Level.FINE,"[DEBUG] Set channel type to CUSTOM for ZelChat recognition");
+            plugin.logDebugMessage("[DEBUG] Set channel type to CUSTOM for ZelChat recognition");
         }
     }
 
@@ -198,11 +198,11 @@ public class ProximityChatModule implements ChatModule {
                 if (!senderIsLocal) {
                     filteredViewers.add(onlinePlayer);
                     if (configManager.isDebugEnabled()) {
-                        plugin.getLogger().log(Level.FINE,"[DEBUG] Added GLOBAL player " + onlinePlayer.getName() + " to viewers (sender is GLOBAL)");
+                        plugin.logDebugMessage("[DEBUG] Added GLOBAL player " + onlinePlayer.getName() + " to viewers (sender is GLOBAL)");
                     }
                 } else {
                     if (configManager.isDebugEnabled()) {
-                        plugin.getLogger().log(Level.FINE,"[DEBUG] Excluded GLOBAL player " + onlinePlayer.getName() + " from viewers (sender is LOCAL)");
+                        plugin.logDebugMessage("[DEBUG] Excluded GLOBAL player " + onlinePlayer.getName() + " from viewers (sender is LOCAL)");
                     }
                 }
                 continue;
@@ -216,7 +216,7 @@ public class ProximityChatModule implements ChatModule {
 
             if (!playerLocation.getWorld().equals(senderWorld)) {
                 if (configManager.isDebugEnabled()) {
-                    plugin.getLogger().log(Level.FINE,"[DEBUG] Excluded LOCAL player " + onlinePlayer.getName() + " from viewers (different world)");
+                    plugin.logDebugMessage("[DEBUG] Excluded LOCAL player " + onlinePlayer.getName() + " from viewers (different world)");
                 }
                 continue;
             }
@@ -225,11 +225,11 @@ public class ProximityChatModule implements ChatModule {
             if (distanceSquared <= radiusSquared) {
                 filteredViewers.add(onlinePlayer);
                 if (configManager.isDebugEnabled()) {
-                    plugin.getLogger().log(Level.FINE,"[DEBUG] Added LOCAL player " + onlinePlayer.getName() + " to viewers (2D distance: " + String.format("%.2f", Math.sqrt(distanceSquared)) + ")");
+                    plugin.logDebugMessage("[DEBUG] Added LOCAL player " + onlinePlayer.getName() + " to viewers (2D distance: " + String.format("%.2f", Math.sqrt(distanceSquared)) + ")");
                 }
             } else {
                 if (configManager.isDebugEnabled()) {
-                    plugin.getLogger().log(Level.FINE,"[DEBUG] Excluded LOCAL player " + onlinePlayer.getName() + " from viewers (2D distance: " + String.format("%.2f", Math.sqrt(distanceSquared)) + ")");
+                    plugin.logDebugMessage("[DEBUG] Excluded LOCAL player " + onlinePlayer.getName() + " from viewers (2D distance: " + String.format("%.2f", Math.sqrt(distanceSquared)) + ")");
                 }
             }
         }
